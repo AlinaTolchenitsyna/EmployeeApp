@@ -1,0 +1,103 @@
+<h2>Сотрудники</h2>
+<button class="btn btn-success mb-3" (click)="openCreateModal()">➕ Добавить сотрудника</button>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered">
+    <thead class="table-light">
+       <tr>
+    <th (click)="toggleSort('department')" style="cursor: pointer">
+      Отдел
+      <span *ngIf="sortColumn === 'department'">
+        {{ sortDirection === 'asc' ? '▲' : '▼' }}
+      </span>
+    </th>
+    <th (click)="toggleSort('fullName')" style="cursor: pointer">
+      Ф.И.О
+      <span *ngIf="sortColumn === 'fullName'">
+        {{ sortDirection === 'asc' ? '▲' : '▼' }}
+      </span>
+    </th>
+    <th (click)="toggleSort('birthDate')" style="cursor: pointer">
+      Дата рождения
+      <span *ngIf="sortColumn === 'birthDate'">
+        {{ sortDirection === 'asc' ? '▲' : '▼' }}
+      </span>
+    </th>
+    <th (click)="toggleSort('hireDate')" style="cursor: pointer">
+      Дата устройства
+      <span *ngIf="sortColumn === 'hireDate'">
+        {{ sortDirection === 'asc' ? '▲' : '▼' }}
+      </span>
+    </th>
+    <th (click)="toggleSort('salary')" style="cursor: pointer">
+      Зарплата
+      <span *ngIf="sortColumn === 'salary'">
+        {{ sortDirection === 'asc' ? '▲' : '▼' }}
+      </span>
+    </th>
+    <th></th>
+  </tr>
+  <tr>
+    <th><input class="form-control form-control-sm" [(ngModel)]="filter.department" (input)="applyFiltersAndSorting()"></th>
+    <th><input class="form-control form-control-sm" [(ngModel)]="filter.fullName" (input)="applyFiltersAndSorting()"></th>
+    <th><input class="form-control form-control-sm" type="date" [(ngModel)]="filter.birthDate" (input)="applyFiltersAndSorting()"></th>
+    <th><input class="form-control form-control-sm" type="date" [(ngModel)]="filter.hireDate" (input)="applyFiltersAndSorting()"></th>
+    <th><input class="form-control form-control-sm" [(ngModel)]="filter.salary" (input)="applyFiltersAndSorting()"></th>
+    <th></th>
+  </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let e of employees">
+        <td>{{e.department}}</td>
+        <td>{{e.fullName}}</td>
+        <td>{{e.birthDate | date:'dd.MM.yyyy'}}</td>
+        <td>{{e.hireDate | date:'dd.MM.yyyy'}}</td>
+        <td>{{e.salary}}</td>
+        <td class="text-nowrap">
+          <button class="btn btn-sm btn-primary me-1" (click)="openEditModal(e)">✏️</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteEmployee(e.id)">🗑️</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="modal fade" id="employeeModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="employeeForm" (ngSubmit)="saveEmployee()">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ editingEmployee ? 'Редактировать' : 'Создать' }} сотрудника</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Ф.И.О</label>
+            <input type="text" class="form-control" formControlName="fullName">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Отдел</label>
+            <input type="text" class="form-control" formControlName="department">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Дата рождения</label>
+            <input type="date" class="form-control" formControlName="birthDate">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Дата устройства</label>
+            <input type="date" class="form-control" formControlName="hireDate">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Зарплата</label>
+            <input type="number" class="form-control" formControlName="salary">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Отмена</button>
+          <button class="btn btn-primary" type="submit">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+# Node
+node_modules/
+npm-debug.log
+.env
+
+# Angular
+employee-app/node_modules/
+employee-app/dist/
+
+# .NET
+api/bin/
+api/obj/
+api/*.db
+api/*.mdf
+api/*.ldf
+
+# VS Code / JetBrains
+.vs/
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Общие логи
+*.log
